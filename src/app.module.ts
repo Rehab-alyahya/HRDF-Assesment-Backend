@@ -3,6 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import * as dotenv from 'dotenv';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from './user/user.module';
+import { TodoModule } from './todo/todo.module';
+import { User } from './user/user.entity';
 
 dotenv.config();
 @Module({
@@ -17,8 +20,10 @@ dotenv.config();
       ssl:
         process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
       synchronize: true,
-      entities: [],
+      entities: [User],
     }),
+    UserModule,
+    TodoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
