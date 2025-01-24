@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { TodoModule } from './todo/todo.module';
 import { User } from './user/user.entity';
+import { Todo } from './todo/todo-entity';
 
 dotenv.config();
 @Module({
@@ -20,7 +21,7 @@ dotenv.config();
       ssl:
         process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
       synchronize: true,
-      entities: [User],
+      entities: [User, Todo],
     }),
     UserModule,
     TodoModule,
