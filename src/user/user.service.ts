@@ -39,7 +39,7 @@ export class UserService {
     const user = await this.userRepository.findOneBy({ id });
 
     if (!user) {
-      throw new NotFoundException('Book not found');
+      throw new NotFoundException('User not found');
     }
 
     Object.assign(user, updatedUserDto);

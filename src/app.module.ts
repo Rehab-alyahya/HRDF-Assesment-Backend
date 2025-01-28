@@ -4,29 +4,19 @@ import { AppService } from './app.service';
 import * as dotenv from 'dotenv';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
-import { TodoModule } from './todo/todo.module';
-import { User } from './user/user.entity';
-import { Todo } from './todo/todo-entity';
 import { AuthModule } from './auth/auth.module';
-
+import { RestaurantModule } from './restaurant/restaurant.module';
+import { ConfigModule } from '@nestjs/config';
+import { dataSourceOptions } from 'database/data-source';
 dotenv.config();
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT || '5432', 10),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      ssl:
-        process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
-      synchronize: true,
-      entities: [User, Todo],
-    }),
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot(dataSourceOptions),
     UserModule,
-    TodoModule,
+    RestaurantModule,
     AuthModule,
+    RestaurantModule,
   ],
   controllers: [AppController],
   providers: [AppService],
